@@ -4,9 +4,14 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 function PasswordInput(props) {
   const [showPassWord, setShowPassWord] = useState(false);
+  const { inputRef, ...otherProps } = props;
   return (
-    <Flex {...props}>
-      <Input type={showPassWord ? "text" : "password"} placeholder="password" />
+    <Flex {...otherProps}>
+      <Input
+        type={showPassWord ? "text" : "password"}
+        ref={inputRef}
+        placeholder="password"
+      />
       <Button
         onClick={() => {
           setShowPassWord((prevPass) => !prevPass);
