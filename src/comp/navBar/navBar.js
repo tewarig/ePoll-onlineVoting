@@ -19,7 +19,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   DrawerContent,
 } from "@chakra-ui/react";
@@ -29,45 +28,22 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import {
-  BsFillCartFill,
-  BsFillFilePersonFill,
-  BsFillInfoCircleFill,
-} from "react-icons/bs";
 
 import { useEffect, useState } from "react";
 import HandleAuth from "./signUser/handlauth";
+import { auth, logout } from "../../module/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function NavBar() {
-  //   const { isOpen, onToggle } = useDisclosure();
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
-  //   const { user, error, isLoading } = useUser();
   const [showUser, setUser] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
 
-  //   useEffect(() => {
-  //     const checkLocalStorage = localStorage.getItem("state");
-  //     if (checkLocalStorage) {
-  //       const data = JSON.parse(checkLocalStorage);
-  //       if (data.length > state.get().length) {
-  //         console.log(data);
-  //         data.map((x) => state.merge(x.data));
-  //       } else {
-  //         localStorage.setItem("state", JSON.stringify(state.get().value));
-  //       }
-  //     } else {
-  //       localStorage.setItem("state", JSON.stringify(state.get().value));
-  //     }
-  //   }, [state]);
-  //   const goToCartPage = () => {
-  //     router.push("/cart");
-  //   };
-
-  //   useEffect(() => {
-  //     if (typeof user !== undefined) {
-  //       setUser(true);
-  //     }
-  //   }, [user]);
+  useEffect(() => {
+    console.log("user");
+    console.log(user);
+  }, [user]);
 
   return (
     <Box>
@@ -116,55 +92,39 @@ export default function NavBar() {
           direction={"row"}
           spacing={6}
         >
-          {/* <Button
-              as={'a'}
-              fontSize={'sm'}
-              fontWeight={400}
-              variant={'link'}
-              href={'#'}>
-              Sign In
-            </Button>
-            <Button
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'blue.900'}
-              href={'#'}
-              _hover={{
-                bg: 'black.300',
-              }}>
-              Sign Up
-            </Button> */}
           <Flex>
-            <Button margin="5px" onClick={onOpen}>
-              Login
-            </Button>
+            {!user && (
+              <Button margin="5px" onClick={onOpen}>
+                Login
+              </Button>
+            )}
+            {user && (
+              <Box margin="5%">
+                <Popover trigger={"hover"} placement={"bottom-start"}>
+                  <PopoverTrigger>
+                    <Link p={2} href={"#"} fontSize={"sm"} fontWeight={500}>
+                      <Button>User</Button>
+                    </Link>
+                  </PopoverTrigger>
 
-            <Box margin="5%">
-              <Popover trigger={"hover"} placement={"bottom-start"}>
-                <PopoverTrigger>
-                  <Link p={2} href={"#"} fontSize={"sm"} fontWeight={500}>
-                    <Button>User</Button>
-                  </Link>
-                </PopoverTrigger>
-
-                <PopoverContent
-                  border={0}
-                  boxShadow={"xl"}
-                  p={4}
-                  rounded={"xl"}
-                  minW={"sm"}
-                >
-                  <Stack>
-                    <>
-                      <DesktopSubNav label="View Polls" href="/lastOrder" />
-                      <DesktopSubNav label="LogOut" href="/api/auth/logout" />
-                    </>
-                  </Stack>
-                </PopoverContent>
-              </Popover>
-            </Box>
+                  <PopoverContent
+                    border={0}
+                    boxShadow={"xl"}
+                    p={4}
+                    rounded={"xl"}
+                    minW={"sm"}
+                  >
+                    <Stack>
+                      <>
+                        <Box> Hello , {user.email}</Box>
+                        <DesktopSubNav label="View Polls" href="/lastOrder" />
+                        <Button onClick={() => logout()}>Logout</Button>
+                      </>
+                    </Stack>
+                  </PopoverContent>
+                </Popover>
+              </Box>
+            )}
           </Flex>
         </Stack>
       </Flex>
@@ -173,12 +133,7 @@ export default function NavBar() {
         <MobileNav />
       </Collapse>
 
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        // initialFocusRef={firstField}
-        onClose={onClose}
-      >
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -196,7 +151,6 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
-  //   const { user, error, isLoading } = useUser();
 
   return (
     <Stack direction={"row"} spacing={4}>
