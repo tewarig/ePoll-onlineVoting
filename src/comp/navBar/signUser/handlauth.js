@@ -9,7 +9,7 @@ import {
 } from "../../../module/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-function HandleAuth() {
+function HandleAuth({ onClose }) {
   const [showLogin, setLogin] = useState(true);
   const [user, error, loading] = useAuthState(auth);
 
@@ -19,6 +19,7 @@ function HandleAuth() {
   const name = useRef();
   const login = () => {
     logInWithEmailAndPassword(email.current.value, password.current.value);
+    onClose();
   };
   const signUp = () => {
     const password1 = password.current.value;

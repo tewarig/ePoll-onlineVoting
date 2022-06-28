@@ -7,6 +7,7 @@ import Home from "./pages/home/home";
 import Poll from "./pages/poll/poll";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./comp/protectedRoute/protectedRoute";
+import RedirectOnlogin from "./comp/RedirectOnLogin/redirectOnLogin";
 
 function App() {
   return (
@@ -14,7 +15,15 @@ function App() {
       <NavBar />
       <BrowserRouter>
         <Routes>
-          <Route path="/" index element={<Home />} />
+          <Route
+            path="/"
+            index
+            element={
+              <RedirectOnlogin routeLink="/dashboard">
+                <Home />
+              </RedirectOnlogin>
+            }
+          />
           <Route
             path="/dashboard"
             element={

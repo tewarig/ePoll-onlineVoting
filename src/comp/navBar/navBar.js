@@ -139,7 +139,7 @@ export default function NavBar() {
           <DrawerCloseButton />
 
           <DrawerBody>
-            <HandleAuth />
+            <HandleAuth onClose={onClose} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
