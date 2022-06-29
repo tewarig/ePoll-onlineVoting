@@ -24,7 +24,6 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_messagingSenderId,
   appId: process.env.REACT_APP_appId,
 };
-console.log(firebaseConfig);
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -85,6 +84,14 @@ const sendPasswordReset = async (email) => {
 const logout = () => {
   signOut(auth);
 };
+const addAPoll = async (title, options , email) => {
+  const data = await addDoc(collection(db, "polls"), {
+    title: title,
+    options: options,
+    email: "gauravtewari111@gmail.com"
+  });
+  return data;
+};
 export {
   auth,
   db,
@@ -93,4 +100,5 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  addAPoll,
 };
