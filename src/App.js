@@ -8,10 +8,12 @@ import Poll from "./pages/poll/poll";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./comp/protectedRoute/protectedRoute";
 import RedirectOnlogin from "./comp/RedirectOnLogin/redirectOnLogin";
+import Context from "./context";
 
 function App() {
   return (
     <ChakraProvider>
+      <Context>
       <NavBar />
       <BrowserRouter>
         <Routes>
@@ -35,6 +37,7 @@ function App() {
           <Route path="/poll" element={<Poll />} />
         </Routes>
       </BrowserRouter>
+      </Context>
     </ChakraProvider>
   );
 }

@@ -24,6 +24,8 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { db } from "../../module/firebase";
 import { v4 as uuidv4 } from "uuid";
 import GetUserData from "../../hooks/userData";
+import useUserPolls from "../../hooks/getUserPolls";
+import RenderPolls from "./renderPolls";
 
 function DashBoard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -49,9 +51,8 @@ function DashBoard() {
       title: title,
       options: options,
       email: user.email,
-    
     });
-    setValue(""); 
+    setValue("");
     setOptions([]);
     onClose();
   };
@@ -61,13 +62,18 @@ function DashBoard() {
 
   return (
     <div>
-      <Button onClick={onOpen}>
-        {" "}
-        <IconButton>
-          <AddIcon color="#D9D9D9" />
-        </IconButton>
-        Add A Poll
-      </Button>
+      <Flex backgroundColor="#D9D9D9" justifyContent={"space-between"} margin="20" padding="10" borderRadius={"25"}>
+        <Heading>Polls</Heading>
+        <Button onClick={onOpen}>
+          {" "}
+          <IconButton>
+            <AddIcon color="#D9D9D9" />
+          </IconButton>
+          Add A Poll
+        </Button>
+      </Flex>
+
+      <RenderPolls />
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
