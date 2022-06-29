@@ -23,6 +23,7 @@ import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { CloseIcon } from "@chakra-ui/icons";
 import { db } from "../../module/firebase";
 import { v4 as uuidv4 } from "uuid";
+import GetUserData from "../../hooks/userData";
 
 function DashBoard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,6 +31,7 @@ function DashBoard() {
   const [options, setOptions] = useState([]);
   const [showAddValue, setAddValue] = useState(false);
   const [value, setValue] = useState("");
+  const { user } = GetUserData();
 
   const question = useRef();
   const addValue = (value, id) => {
@@ -44,10 +46,13 @@ function DashBoard() {
 
     const data = doc(db, "polls", id);
     const poll = await setDoc(data, {
-      title,
-      options,
-      email: "gauravtewari111@gmail.com",
+      title: title,
+      options: options,
+      email: user.email,
+    
     });
+    setValue(""); 
+    setOptions([]);
     onClose();
   };
   const addToFireStore = () => {
