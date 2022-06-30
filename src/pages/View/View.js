@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../module/firebase";
 import RenderPolls from "../dashboard/renderPolls";
+import { prettyDOM } from "@testing-library/react";
 
 const View = () => {
   const { viewPoll } = useParams();
@@ -44,9 +45,14 @@ const View = () => {
     return total;
   }, [poll]);
   const calculatePercentage = (vote) => {
-    console.log("vote", vote);
-    console.log("total", totalView);
-    return (vote / totalView) * 100;
+    if ((vote == totalView) == 0) {
+      return "0";
+    }
+    const per = (vote / totalView) * 100;
+    if (per >= 0 && per <= 100) {
+      return per;
+    }
+    return 0;
   };
   const copyToClipBoard = () => {
     navigator.clipboard.writeText(`getPoll`);

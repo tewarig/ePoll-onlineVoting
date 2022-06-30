@@ -2,6 +2,7 @@ import { Flex, Heading, Box, Button, IconButton } from "@chakra-ui/react";
 import React from "react";
 import { UserState } from "../../context";
 import { EditIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 function RenderPolls() {
   const polls = UserState();
@@ -37,10 +38,12 @@ function RenderPolls() {
               >
                 {getTotalVote(x.data().options)} votes
               </Button>
-              <Button>
-                <IconButton icon={<EditIcon />} ml="2" isRound={true} />
-                View Details
-              </Button>
+              <Link to={`/viewpoll/${x.id}`}>
+                <Button>
+                  <IconButton icon={<EditIcon />} ml="2" isRound={true} />
+                  View Details
+                </Button>
+              </Link>
             </Flex>
           </Flex>
         );
