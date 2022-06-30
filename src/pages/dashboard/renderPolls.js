@@ -18,7 +18,7 @@ function RenderPolls() {
       {polls.map((x) => {
         return (
           <Flex
-            backgroundColor={"#d9d9d9"}
+            backgroundColor={"#fff"}
             margin="1"
             alignItems={"center"}
             textAlign="center"
@@ -26,10 +26,11 @@ function RenderPolls() {
             padding="10"
             flexDirection={"row"}
             justifyContent="space-between"
+            shadow={"md"}
           >
             <Heading> {x.data().title}</Heading>
             <Flex>
-              <Button>{getTotalVote(x.data().options)} votes</Button>
+              <Button mr="10">{getTotalVote(x.data().options)} votes</Button>
               <Button>
                 <IconButton icon={<EditIcon />} ml="2" isRound={true} />
                 View Details

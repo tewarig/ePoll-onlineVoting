@@ -61,13 +61,16 @@ function DashBoard() {
   };
 
   return (
-    <div>
-      <Flex backgroundColor="#D9D9D9" justifyContent={"space-between"} margin="20" padding="10" borderRadius={"25"}>
+    <Box backgroundColor="#f2f3f5">
+      <Flex justifyContent={"space-between"} padding="10" borderRadius={"25"}
+      marginRight="30"
+      marginLeft={"20"}
+      >
         <Heading>Polls</Heading>
-        <Button onClick={onOpen}>
+        <Button onClick={onOpen} backgroundColor="#333" color="#fff">
           {" "}
-          <IconButton>
-            <AddIcon color="#D9D9D9" />
+          <IconButton backgroundColor={"#333"}>
+            <AddIcon color="#fff" />
           </IconButton>
           Add A Poll
         </Button>
@@ -133,7 +136,7 @@ function DashBoard() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-    </div>
+    </Box>
   );
 }
 
