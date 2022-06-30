@@ -27,6 +27,7 @@ function RenderPolls() {
             flexDirection={"row"}
             justifyContent="space-between"
             shadow={"md"}
+            key={x.key}
           >
             <Heading> {x.data().title}</Heading>
             <Flex>

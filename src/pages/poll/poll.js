@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Heading,
@@ -27,8 +27,11 @@ export default function Poll() {
       console.log("No such document!");
     }
   }
+  useEffect(()=>{
+    getPoll();
 
-  getPoll();
+  },[])
+
 
   async function vote(optionId) {
     const docRef = doc(db, "polls", pollId);
@@ -47,7 +50,7 @@ export default function Poll() {
 
   function voted(user, poll) {
     if (user) {
-      if (poll.votes) {
+      if (poll && poll.votes) {
         return poll.votes.some((vote) => vote.userEmail === user.email);
       }
     }
@@ -55,12 +58,19 @@ export default function Poll() {
   }
 
   const isUserVoted = useMemo(() => voted(user, poll), [user, poll]);
+  console.log(poll);
 
   if (!poll) {
     return <Heading>Loading...</Heading>;
   }
   if (isUserVoted) {
-    return <Heading>You have aleady have voted.</Heading>;
+    return (
+      <Box alignItems={"center"} justifyContent="center">
+        <Heading margin="50">
+          Hi , {user.email} You have aleady have voted :)
+        </Heading>
+      </Box>
+    );
   }
   return (
     <Box alignItems={"center"}>

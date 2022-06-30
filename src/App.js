@@ -37,7 +37,7 @@ function App() {
             ></Route>
             <Route path="/poll/:pollId" element={<Poll />} />
             <Route
-              path="/viewpoll/"
+              path="/viewpoll/:viewPoll"
               element={
                 <ProtectedRoute>
                   <View />
