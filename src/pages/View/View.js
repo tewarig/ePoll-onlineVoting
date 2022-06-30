@@ -14,17 +14,17 @@ const View = () => {
   const options = [
     {
       id: 0,
-      value: "success",
+      value: "Yes",
       vote: 5,
     },
     {
       id: 1,
-      value: "Meow",
+      value: "No",
       vote: 10,
     },
     {
       id: 2,
-      value: "macbook",
+      value: "I don't know what is javascript ?",
       vote: 15,
     },
   ];
@@ -65,7 +65,7 @@ const View = () => {
             </Flex>
           </Box>
 
-          <Heading> How do this mini project looks in the end ?</Heading>
+          <Heading> Do you use javascript on daily basics ?</Heading>
 
           <Flex
             width={"100%"}
