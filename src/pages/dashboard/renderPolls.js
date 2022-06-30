@@ -30,7 +30,12 @@ function RenderPolls() {
           >
             <Heading> {x.data().title}</Heading>
             <Flex>
-              <Button mr="10">{getTotalVote(x.data().options)} votes</Button>
+              <Button
+                mr="10
+              "
+              >
+                {getTotalVote(x.data().options)} votes
+              </Button>
               <Button>
                 <IconButton icon={<EditIcon />} ml="2" isRound={true} />
                 View Details
