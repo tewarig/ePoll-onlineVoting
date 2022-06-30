@@ -4,6 +4,7 @@ import {
   IconButton,
   useDisclosure,
   Flex,
+  Switch,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import React, { useState, useRef, useId } from "react";
@@ -34,7 +35,7 @@ function DashBoard() {
   const [showAddValue, setAddValue] = useState(false);
   const [value, setValue] = useState("");
   const { user } = GetUserData();
-
+  const allowUser = useRef();
   const question = useRef();
   const addValue = (value, id) => {
     setOptions([...options, { id: id, value: value, votes: 0 }]);
@@ -44,13 +45,15 @@ function DashBoard() {
     setOptions(options.filter((option) => option.id !== id));
   };
   const addAPoll = async (title, options) => {
+    console.log(allowUser.current.checked);
     const id = uuidv4();
-
     const data = doc(db, "polls", id);
     const poll = await setDoc(data, {
       title: title,
       options: options,
       email: user.email,
+      isAuth: allowUser.current.checked,
+      votes: [],
     });
     setValue("");
     setOptions([]);
@@ -62,9 +65,12 @@ function DashBoard() {
 
   return (
     <Box backgroundColor="#f2f3f5">
-      <Flex justifyContent={"space-between"} padding="10" borderRadius={"25"}
-      marginRight="30"
-      marginLeft={"20"}
+      <Flex
+        justifyContent={"space-between"}
+        padding="10"
+        borderRadius={"25"}
+        marginRight="30"
+        marginLeft={"20"}
       >
         <Heading>Polls</Heading>
         <Button onClick={onOpen} backgroundColor="#333" color="#fff">
@@ -124,6 +130,14 @@ function DashBoard() {
                 <TickInput onClickFunction={addValue} value={options} />
               ) : null}
             </Box>
+            <Flex
+              flexDirection={"row"}
+              justifyContent="space-between"
+              alignItems={"center"}
+            >
+              <Box> Only Logged in User </Box>
+              <Switch ml="2" ref={allowUser} />
+            </Flex>
           </DrawerBody>
 
           <DrawerFooter>

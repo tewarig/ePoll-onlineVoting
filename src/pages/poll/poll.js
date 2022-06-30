@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import {
   Box,
   Heading,
@@ -8,25 +8,60 @@ import {
   Input,
   IconButton,
 } from "@chakra-ui/react";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../../module/firebase";
+import { useParams } from "react-router-dom";
+import GetUserData from "../../hooks/userData";
 
 export default function Poll() {
-  const options = [
-    {
-      id: 0,
-      value: "Yes",
-      vote: 5,
-    },
-    {
-      id: 1,
-      value: "No",
-      vote: 10,
-    },
-    {
-      id: 2,
-      value: "I don't know what is javascript ?",
-      vote: 15,
-    },
-  ];
+  const { pollId } = useParams();
+  const [poll, setPoll] = useState(null);
+  const { user } = GetUserData();
+  async function getPoll() {
+    const docRef = doc(db, "polls", pollId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setPoll(docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+  }
+
+  getPoll();
+
+  async function vote(optionId) {
+    const docRef = doc(db, "polls", pollId);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    let newOptions = data.options;
+    newOptions[optionId].votes++;
+    const newVotes = data.votes;
+    const userEmail = user.email ? user.email : "anonymous";
+    newVotes.push({ userEmail, optionId });
+
+    const newData = { ...data, votes: newVotes, options: newOptions };
+    const poll = await setDoc(docRef, newData);
+    setPoll(poll.data());
+  }
+
+  function voted(user, poll) {
+    if (user) {
+      if (poll.votes) {
+        return poll.votes.some((vote) => vote.userEmail === user.email);
+      }
+    }
+    return false;
+  }
+
+  const isUserVoted = useMemo(() => voted(user, poll), [user, poll]);
+
+  if (!poll) {
+    return <Heading>Loading...</Heading>;
+  }
+  if (isUserVoted) {
+    return <Heading>You have aleady have voted.</Heading>;
+  }
   return (
     <Box alignItems={"center"}>
       <Box
@@ -41,10 +76,15 @@ export default function Poll() {
         ml="150"
         boxShadow="xs"
       >
-        <Heading>What is the best way to learn javascript ?</Heading>
+        <Heading>{poll.title}</Heading>
         <Flex flexDirection={"column"} mt="5">
-          {options.map((option) => (
-            <Button margin={"2"} padding={"8"} colorScheme="blue">
+          {poll.options.map((option) => (
+            <Button
+              margin={"2"}
+              padding={"8"}
+              colorScheme="blue"
+              onClick={() => vote(option.id)}
+            >
               <Heading>{option.value}</Heading>
             </Button>
           ))}
