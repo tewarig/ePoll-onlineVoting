@@ -4,9 +4,12 @@ import { UserState } from "../../context";
 import { EditIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useMediaQuery } from "@chakra-ui/react";
 
 function RenderPolls() {
   const polls = UserState();
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
+
   const getTotalVote = (options) => {
     let votes = 0;
     for (let i = 0; i < options.length; i++) {
@@ -19,10 +22,10 @@ function RenderPolls() {
     return (
       <Flex
         flexDirection={"column"}
-        padding="20"
+        padding={isLargerThan1000 ? "20" : "0"}
         alignContent={"center"}
         alignItems={"center"}
-        margin="20"
+        margin={isLargerThan1000 ? "20" : "0"}
       >
         <Heading>No Polls Found please create a new One </Heading>
         <img src="https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/344/external-page-not-found-shopping-and-retail-smashingstocks-flat-smashing-stocks.png" />
@@ -31,7 +34,7 @@ function RenderPolls() {
   }
 
   return (
-    <Flex flexDirection={"column"} padding="20">
+    <Flex flexDirection={"column"} padding={isLargerThan1000 ? "20" : "5"}>
       {polls.map((x) => {
         return (
           <Flex
@@ -40,17 +43,26 @@ function RenderPolls() {
             alignItems={"center"}
             textAlign="center"
             borderRadius={"25"}
-            padding="10"
+            padding={isLargerThan1000 ? "10" : "0"}
             flexDirection={"row"}
             justifyContent="space-between"
             shadow={"md"}
             key={x.key}
           >
-            <Heading> {x.data().title}</Heading>
-            <Flex>
+            <Heading
+              ml={isLargerThan1000 ? "0" : "2"}
+              size={isLargerThan1000 ? "xl" : "sm"}
+            >
+              {" "}
+              {x.data().title}
+            </Heading>
+            <Flex
+              flexDirection={isLargerThan1000 ? "row" : "column"}
+              padding={isLargerThan1000 ? "0" : "5"}
+            >
               <Button
-                mr="10
-              "
+                mr={isLargerThan1000 ? "10" : "0"}
+                mb={isLargerThan1000 ? "0" : "1"}
               >
                 {getTotalVote(x.data().options)} votes
               </Button>

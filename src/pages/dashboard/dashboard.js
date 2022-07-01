@@ -28,6 +28,7 @@ import GetUserData from "../../hooks/userData";
 import useUserPolls from "../../hooks/getUserPolls";
 import RenderPolls from "./renderPolls";
 import { toast } from "react-toastify";
+import { useMediaQuery } from "@chakra-ui/react";
 
 function DashBoard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,6 +39,8 @@ function DashBoard() {
   const { user } = GetUserData();
   const allowUser = useRef();
   const question = useRef();
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
+
   const addValue = (value, id) => {
     setOptions([...options, { id: id, value: value, votes: 0 }]);
     setAddValue(false);
@@ -81,10 +84,10 @@ function DashBoard() {
     <Box backgroundColor="#f2f3f5">
       <Flex
         justifyContent={"space-between"}
-        padding="10"
+        padding={isLargerThan1000 ? "10" : "1"}
         borderRadius={"25"}
-        marginRight="30"
-        marginLeft={"20"}
+        marginRight={isLargerThan1000 ? "30" : "0"}
+        marginLeft={isLargerThan1000 ? "20" : "0"}
       >
         <Heading>Polls</Heading>
         <Button onClick={onOpen} backgroundColor="#333" color="#fff">
