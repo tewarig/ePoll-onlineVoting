@@ -47,7 +47,6 @@ const View = () => {
   }, [poll]);
   const calculatePercentage = (vote) => {
     if (vote == 0 && totalView == 0) {
-     
       return "0";
     }
     const per = (vote / totalView) * 100;
