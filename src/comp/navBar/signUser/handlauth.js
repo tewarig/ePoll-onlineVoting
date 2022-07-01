@@ -20,13 +20,25 @@ function HandleAuth({ onClose }) {
   const anotherPassword = useRef();
   const name = useRef();
   const login = () => {
-    logInWithEmailAndPassword(email.current.value, password.current.value);
-    onClose();
+    if (validateEmail(email.current.value)) {
+      logInWithEmailAndPassword(email.current.value, password.current.value);
+      onClose();
+    }
   };
+  function validateEmail(emailAdress) {
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (emailAdress.match(regexEmail)) {
+      return true;
+    } else {
+      toast.error("Invalid email");
+      return false;
+    }
+  }
+
   const signUp = () => {
     const password1 = password.current.value;
     const password2 = password.current.value;
-    if (password1 === password2) {
+    if (password1 === password2 && validateEmail(email.current.value)) {
       registerWithEmailAndPassword(
         name.current.value,
         email.current.value,
@@ -38,7 +50,11 @@ function HandleAuth({ onClose }) {
     }
   };
   const reset = () => {
-    if (email.current.value && email.current.value.length > 0) {
+    if (
+      email.current.value &&
+      email.current.value.length > 0 &&
+      validateEmail(email.current.value)
+    ) {
       sendPasswordReset(email.current.value);
     } else {
       toast.error("Opss! please enter email");

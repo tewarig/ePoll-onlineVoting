@@ -7,6 +7,7 @@ import {
   Button,
   Input,
   IconButton,
+  Stack
 } from "@chakra-ui/react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../module/firebase";
@@ -17,6 +18,7 @@ import { toast } from "react-toastify";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 import { useMediaQuery } from "@chakra-ui/react";
+import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 export default function Poll() {
   const { pollId } = useParams();
@@ -131,7 +133,20 @@ export default function Poll() {
     );
   }
   if (!poll) {
-    return <Heading>Loading...</Heading>;
+    return (
+      <Stack
+        width={"80%"}
+        ml={isLargerThan1000 ? "10%" : "10%"}
+        mt={isLargerThan1000 ? "50" : "0"}
+      >
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+      </Stack>
+    );
   }
 
   return (

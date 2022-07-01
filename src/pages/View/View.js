@@ -7,6 +7,7 @@ import {
   Input,
   IconButton,
   Divider,
+  Stack,
 } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { AttachmentIcon } from "@chakra-ui/icons";
@@ -15,6 +16,8 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../module/firebase";
 import RenderPolls from "../dashboard/renderPolls";
 import { useMediaQuery } from "@chakra-ui/react";
+import { toast } from "react-toastify";
+import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 const View = () => {
   const { viewPoll } = useParams();
@@ -59,6 +62,7 @@ const View = () => {
     return 0;
   };
   async function copyTextToClipboard(text) {
+    toast.success("copied");
     if ("clipboard" in navigator) {
       return await navigator.clipboard.writeText(text);
     } else {
@@ -66,7 +70,20 @@ const View = () => {
     }
   }
   if (!poll) {
-    return <Heading>Loading....</Heading>;
+    return (
+      <Stack
+        width={"80%"}
+        ml={isLargerThan1000 ? "10%" : "10%"}
+        mt={isLargerThan1000 ? "50" : "0"}
+      >
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+        <Skeleton height="40px" />
+      </Stack>
+    );
   }
   const link = `https://epoll.gauravtewari.xyz/poll/${docId}`;
   return (
@@ -114,6 +131,7 @@ const View = () => {
                 icon={
                   <AttachmentIcon onClick={() => copyTextToClipboard(link)} />
                 }
+                mt={isLargerThan1000 ? "2" : "0"}
               />
             </Flex>
             <Flex mt="10">
@@ -166,13 +184,16 @@ const View = () => {
             <Flex
               justifyContent={"space-between"}
               backgroundColor="#fff"
-              margin={isLargerThan1000 ?"25" : "5"}
-              padding={isLargerThan1000 ?"25": "5"}
+              margin={isLargerThan1000 ? "25" : "5"}
+              padding={isLargerThan1000 ? "25" : "5"}
               borderRadius="25"
               flexDirection={!isLargerThan1000 ? "column" : "row"}
             >
               <Heading size={"md"}>{user.userEmail}</Heading>
-              <Button mt={isLargerThan1000 ? "0": "5"}> {poll.options[user.optionId].value}</Button>
+              <Button mt={isLargerThan1000 ? "0" : "5"}>
+                {" "}
+                {poll.options[user.optionId].value}
+              </Button>
             </Flex>
           ))}
         </Heading>
