@@ -35,7 +35,7 @@ function Home() {
           <img src={vote} width="100%" height="100%" />
           <Flex flexDirection={"column"} width="100%" textAlign="center">
             <Heading size={"4xl"}> Epoll </Heading>
-            <Heading mt="20"> Best to do an online Poll</Heading>
+            <Heading mt="20"> one of the best app to do an online Poll</Heading>
           </Flex>
         </Flex>
       </Box>
