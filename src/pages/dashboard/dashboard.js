@@ -86,8 +86,8 @@ function DashBoard() {
         justifyContent={"space-between"}
         padding={isLargerThan1000 ? "10" : "1"}
         borderRadius={"25"}
-        marginRight={isLargerThan1000 ? "30" : "0"}
-        marginLeft={isLargerThan1000 ? "20" : "0"}
+        marginRight={isLargerThan1000 ? "30" : "5"}
+        marginLeft={isLargerThan1000 ? "20" : "5"}
       >
         <Heading>Polls</Heading>
         <Button onClick={onOpen} backgroundColor="#333" color="#fff">
