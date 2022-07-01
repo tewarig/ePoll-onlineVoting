@@ -48,8 +48,7 @@ const signInWithGoogle = async () => {
     }
     toast.success("Login successful");
   } catch (err) {
-    console.error(err);
-    toast.error(err);
+    notify(err);
   }
 };
 const logInWithEmailAndPassword = async (email, password) => {
@@ -57,8 +56,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     const something = await signInWithEmailAndPassword(auth, email, password);
     notify("login successful");
   } catch (err) {
-    console.error(err);
-    toast.error(err);
+    notify(err);
   }
 };
 const registerWithEmailAndPassword = async (name, email, password) => {
@@ -72,7 +70,6 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       email,
     });
   } catch (err) {
-    console.error(err);
     notify(err.message);
   }
 };
@@ -81,8 +78,7 @@ const sendPasswordReset = async (email) => {
     await sendPasswordResetEmail(auth, email);
     notify("Password reset link sent!");
   } catch (err) {
-    console.error(err);
-    toast.error(err);
+    notify(err);
   }
 };
 const logout = () => {

@@ -32,7 +32,6 @@ function HandleAuth({ onClose }) {
         email.current.value,
         password1
       );
-      notify("SignUp Success");
       onClose();
     } else {
       toast.error("Passwords do not match");

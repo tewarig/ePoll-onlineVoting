@@ -86,9 +86,7 @@ export default function Poll() {
     );
   }
 
-  if (!poll) {
-    return <Heading>Loading...</Heading>;
-  }
+  
   if (isUserVoted) {
     return (
       <Box alignItems={"center"} justifyContent="center">
@@ -97,6 +95,9 @@ export default function Poll() {
         </Heading>
       </Box>
     );
+  }
+  if (!poll) {
+    return <Heading>Loading...</Heading>;
   }
   if (isVotes) {
     return (
