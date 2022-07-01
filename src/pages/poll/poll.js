@@ -12,6 +12,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../module/firebase";
 import { useParams } from "react-router-dom";
 import GetUserData from "../../hooks/userData";
+import HandleAuth from "../../comp/navBar/signUser/handlauth";
 
 export default function Poll() {
   const { pollId } = useParams();
@@ -27,11 +28,9 @@ export default function Poll() {
       console.log("No such document!");
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     getPoll();
-
-  },[])
-
+  }, []);
 
   async function vote(optionId) {
     const docRef = doc(db, "polls", pollId);
@@ -58,7 +57,16 @@ export default function Poll() {
   }
 
   const isUserVoted = useMemo(() => voted(user, poll), [user, poll]);
-  console.log(poll);
+
+  if (!user) {
+    return (
+      <Box alignContent={"center"} alignItems={"center"}>
+        <Box width={"25%"} ml="40%">
+          <HandleAuth></HandleAuth>;
+        </Box>
+      </Box>
+    );
+  }
 
   if (!poll) {
     return <Heading>Loading...</Heading>;

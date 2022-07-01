@@ -19,12 +19,14 @@ import { prettyDOM } from "@testing-library/react";
 const View = () => {
   const { viewPoll } = useParams();
   const [poll, setPoll] = useState(null);
+  const [docId, setDocId] = useState(null);
   async function getPoll() {
     const docRef = doc(db, "polls", viewPoll);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       setPoll(docSnap.data());
+      setDocId(docSnap.id);
     } else {
       console.log("No such document!");
     }
@@ -54,12 +56,17 @@ const View = () => {
     }
     return 0;
   };
-  const copyToClipBoard = () => {
-    navigator.clipboard.writeText(`getPoll`);
-  };
+  async function copyTextToClipboard(text) {
+    if ("clipboard" in navigator) {
+      return await navigator.clipboard.writeText(text);
+    } else {
+      return document.execCommand("copy", true, text);
+    }
+  }
   if (!poll) {
     return <Heading>Loading....</Heading>;
   }
+  const link = `${process.env.REACT_APP_DOMAIN}/poll/${docId}`;
   return (
     <Box alignItems={"center"}>
       <Box
@@ -94,18 +101,20 @@ const View = () => {
             alignItems={"center"}
             mb="20"
           >
-            <Flex width={"80%"} alignSelf="center" ml="50%" mt="5">
+            <Flex width={"80%"} alignSelf="center" ml="30%" mt="5">
               <Box
                 alignContent={"center"}
                 justifyContent="center"
                 textAlign={"center"}
               >
                 <Heading size={"sm"} mt="3%">
-                  https://epoll.gauravtewari.xyz/poll/sfdlndslckndsclkdn
+                  {link}
                 </Heading>
               </Box>
               <IconButton
-                icon={<AttachmentIcon onClick={() => copyToClipBoard()} />}
+                icon={
+                  <AttachmentIcon onClick={() => copyTextToClipboard(link)} />
+                }
               />
             </Flex>
             <Flex mt="10">
