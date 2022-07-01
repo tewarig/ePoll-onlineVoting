@@ -117,7 +117,6 @@ export default function NavBar() {
                     <Stack>
                       <>
                         <Box> Hello , {user.email}</Box>
-                        <DesktopSubNav label="View Polls" href="/lastOrder" />
                         <Button onClick={() => logout()}>Logout</Button>
                       </>
                     </Stack>
