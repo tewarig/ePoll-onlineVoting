@@ -14,7 +14,6 @@ import { useParams } from "react-router-dom";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../module/firebase";
 import RenderPolls from "../dashboard/renderPolls";
-import { prettyDOM } from "@testing-library/react";
 
 const View = () => {
   const { viewPoll } = useParams();
@@ -47,7 +46,8 @@ const View = () => {
     return total;
   }, [poll]);
   const calculatePercentage = (vote) => {
-    if ((vote == totalView) == 0) {
+    if (vote == 0 && totalView == 0) {
+     
       return "0";
     }
     const per = (vote / totalView) * 100;
