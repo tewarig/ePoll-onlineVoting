@@ -3,6 +3,7 @@ import React from "react";
 import { UserState } from "../../context";
 import { EditIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 function RenderPolls() {
   const polls = UserState();
@@ -13,6 +14,21 @@ function RenderPolls() {
     }
     return votes;
   };
+
+  if (polls.length == 0) {
+    return (
+      <Flex
+        flexDirection={"column"}
+        padding="20"
+        alignContent={"center"}
+        alignItems={"center"}
+        margin="20"
+      >
+        <Heading>No Polls Found please create a new One </Heading>
+        <img src="https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/344/external-page-not-found-shopping-and-retail-smashingstocks-flat-smashing-stocks.png" />
+      </Flex>
+    );
+  }
 
   return (
     <Flex flexDirection={"column"} padding="20">

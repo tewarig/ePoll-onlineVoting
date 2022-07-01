@@ -27,6 +27,7 @@ import { v4 as uuidv4 } from "uuid";
 import GetUserData from "../../hooks/userData";
 import useUserPolls from "../../hooks/getUserPolls";
 import RenderPolls from "./renderPolls";
+import { toast } from "react-toastify";
 
 function DashBoard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,9 +46,16 @@ function DashBoard() {
     setOptions(options.filter((option) => option.id !== id));
   };
   const addAPoll = async (title, options) => {
-    console.log(allowUser.current.checked);
     const id = uuidv4();
     const data = doc(db, "polls", id);
+    if (title == "") {
+      toast.error("Please enter a tittle");
+      return;
+    }
+    if (options.length < 2) {
+      toast.error("We atleast need two options");
+      return;
+    }
     const poll = await setDoc(data, {
       title: title,
       options: options,
@@ -57,6 +65,12 @@ function DashBoard() {
     });
     setValue("");
     setOptions([]);
+    toast.success("Poll have been create successfully");
+    toast.success("Updating data");
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 5000);
     onClose();
   };
   const addToFireStore = () => {
@@ -136,7 +150,12 @@ function DashBoard() {
               alignItems={"center"}
             >
               <Box> Only Logged in User </Box>
-              <Switch ml="2" ref={allowUser} />
+              <Switch
+                ml="2"
+                ref={allowUser}
+                isDisabled={true}
+                isChecked={true}
+              />
             </Flex>
           </DrawerBody>
 

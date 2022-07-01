@@ -8,10 +8,12 @@ import {
   sendPasswordReset,
 } from "../../../module/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 function HandleAuth({ onClose }) {
   const [showLogin, setLogin] = useState(true);
   const [user, error, loading] = useAuthState(auth);
+  const notify = (test) => toast(test);
 
   const email = useRef();
   const password = useRef();
@@ -30,13 +32,23 @@ function HandleAuth({ onClose }) {
         email.current.value,
         password1
       );
+      notify("SignUp Success");
+      onClose();
+    } else {
+      toast.error("Passwords do not match");
     }
   };
   const reset = () => {
     if (email.current.value && email.current.value.length > 0) {
       sendPasswordReset(email.current.value);
+    } else {
+      toast.error("Opss! please enter email");
     }
   };
+
+  if (user) {
+    return <Heading> You have aleady Logged in :)</Heading>;
+  }
   if (showLogin)
     return (
       <Box justifyContent={"space-between"} alignItems="center">

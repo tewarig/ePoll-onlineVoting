@@ -16,6 +16,8 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+import { ToastContainer, toast } from 'react-toastify';
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
   authDomain: process.env.REACT_APP_authDomain,
@@ -28,6 +30,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
+const notify = (text) => toast(text);
+
 const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
@@ -44,17 +48,16 @@ const signInWithGoogle = async () => {
     }
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    notify(err.message);
   }
 };
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     const something = await signInWithEmailAndPassword(auth, email, password);
-    console.log("Something");
-    console.log(something);
+    notify("login successful");
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    notify(err.message);
   }
 };
 const registerWithEmailAndPassword = async (name, email, password) => {
@@ -69,26 +72,26 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     });
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    notify(err.message);
   }
 };
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent!");
+    notify("Password reset link sent!");
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    notify(err.message);
   }
 };
 const logout = () => {
   signOut(auth);
 };
-const addAPoll = async (title, options , email) => {
+const addAPoll = async (title, options, email) => {
   const data = await addDoc(collection(db, "polls"), {
     title: title,
     options: options,
-    email: "gauravtewari111@gmail.com"
+    email: "gauravtewari111@gmail.com",
   });
   return data;
 };

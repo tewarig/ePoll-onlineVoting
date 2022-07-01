@@ -8,8 +8,10 @@ import Poll from "./pages/poll/poll";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./comp/protectedRoute/protectedRoute";
 import RedirectOnlogin from "./comp/RedirectOnLogin/redirectOnLogin";
+import { ToastContainer, toast } from "react-toastify";
 import View from "./pages/View/View";
 import Context from "./context";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
               }
             />
           </Routes>
+          <ToastContainer />
+
         </BrowserRouter>
       </Context>
     </ChakraProvider>
