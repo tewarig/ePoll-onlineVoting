@@ -14,11 +14,14 @@ import { useParams } from "react-router-dom";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../module/firebase";
 import RenderPolls from "../dashboard/renderPolls";
+import { useMediaQuery } from "@chakra-ui/react";
 
 const View = () => {
   const { viewPoll } = useParams();
   const [poll, setPoll] = useState(null);
   const [docId, setDocId] = useState(null);
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
+
   async function getPoll() {
     const docRef = doc(db, "polls", viewPoll);
     const docSnap = await getDoc(docRef);
@@ -72,24 +75,15 @@ const View = () => {
         backgroundColor="#f2f2f2"
         borderRadius={"10"}
         mt="5"
-        width={"80%"}
+        width={isLargerThan1000 ? "80%" : "100%"}
         padding="10"
         alignItems={"center"}
         textAlign="center"
         alignSelf={"center"}
-        ml="150"
+        ml={isLargerThan1000 ? "100" : "0"}
         boxShadow="xs"
       >
         <Box alignItems={"center"} textAlign="center">
-          <Box ml="40%">
-            <Flex
-              ml="20"
-              mr="20"
-              alignItems={"center"}
-              textAlign="center"
-            ></Flex>
-          </Box>
-
           <Heading> {poll.title}</Heading>
 
           <Flex
@@ -100,7 +94,13 @@ const View = () => {
             alignItems={"center"}
             mb="20"
           >
-            <Flex width={"80%"} alignSelf="center" ml="30%" mt="5">
+            <Flex
+              width={isLargerThan1000 ? "80%" : "100%"}
+              alignSelf="center"
+              ml={isLargerThan1000 ? "30%" : "0%"}
+              mt="5"
+              flexDirection={!isLargerThan1000 ? "column" : "row"}
+            >
               <Box
                 alignContent={"center"}
                 justifyContent="center"
@@ -151,12 +151,12 @@ const View = () => {
         backgroundColor="#f2f2f2"
         borderRadius={"10"}
         mt="5"
-        width={"80%"}
+        width={isLargerThan1000 ? "80%" : "100%"}
         padding="10"
         alignItems={"center"}
         textAlign="center"
         alignSelf={"center"}
-        ml="150"
+        ml={isLargerThan1000 ? "100" : "0"}
         boxShadow="xs"
       >
         <Heading>
@@ -166,12 +166,13 @@ const View = () => {
             <Flex
               justifyContent={"space-between"}
               backgroundColor="#fff"
-              margin="25"
-              padding={"25"}
+              margin={isLargerThan1000 ?"25" : "5"}
+              padding={isLargerThan1000 ?"25": "5"}
               borderRadius="25"
+              flexDirection={!isLargerThan1000 ? "column" : "row"}
             >
               <Heading size={"md"}>{user.userEmail}</Heading>
-              <Button> {poll.options[user.optionId].value}</Button>
+              <Button mt={isLargerThan1000 ? "0": "5"}> {poll.options[user.optionId].value}</Button>
             </Flex>
           ))}
         </Heading>
