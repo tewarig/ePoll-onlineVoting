@@ -16,6 +16,7 @@ import HandleAuth from "../../comp/navBar/signUser/handlauth";
 import { toast } from "react-toastify";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
+import { useMediaQuery } from "@chakra-ui/react";
 
 export default function Poll() {
   const { pollId } = useParams();
@@ -24,6 +25,7 @@ export default function Poll() {
   const { width, height } = useWindowSize();
   const [isVotes, setVoted] = useState(false);
   const [id, setId] = useState(null);
+  const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
 
   async function getPoll() {
     const docRef = doc(db, "polls", pollId);
@@ -76,6 +78,39 @@ export default function Poll() {
 
   const isUserVoted = useMemo(() => voted(user, poll), [user, poll]);
 
+  if (isVotes) {
+    return (
+      <Box alignItems={"center"}>
+        {isVotes && <Confetti width={width} height={height} />}
+        <Box
+          backgroundColor="#f2f2f2"
+          borderRadius={"10"}
+          mt="5"
+          padding={isLargerThan1000 ? "10" : "2"}
+          alignItems={"center"}
+          textAlign="center"
+          alignSelf={"center"}
+          ml={isLargerThan1000 ? "100" : "2"}
+          boxShadow="xs"
+        >
+          <Heading>{poll.title}</Heading>
+          <Flex flexDirection={"column"} mt="5">
+            {poll.options.map((option) => (
+              <Button
+                margin={isLargerThan1000 ? "2" : "1"}
+                padding={isLargerThan1000 ? "8" : "5"}
+                colorScheme={option.id == id ? "blue" : "gray"}
+                onClick={() => vote(option.id)}
+              >
+                <Heading>{option.value}</Heading>
+              </Button>
+            ))}
+          </Flex>
+        </Box>
+      </Box>
+    );
+  }
+
   if (!user) {
     return (
       <Box alignContent={"center"} alignItems={"center"}>
@@ -86,7 +121,6 @@ export default function Poll() {
     );
   }
 
-  
   if (isUserVoted) {
     return (
       <Box alignItems={"center"} justifyContent="center">
@@ -99,39 +133,6 @@ export default function Poll() {
   if (!poll) {
     return <Heading>Loading...</Heading>;
   }
-  if (isVotes) {
-    return (
-      <Box alignItems={"center"}>
-        {isVotes && <Confetti width={width} height={height} />}
-        <Box
-          backgroundColor="#f2f2f2"
-          borderRadius={"10"}
-          mt="5"
-          width={"80%"}
-          padding="10"
-          alignItems={"center"}
-          textAlign="center"
-          alignSelf={"center"}
-          ml="150"
-          boxShadow="xs"
-        >
-          <Heading>{poll.title}</Heading>
-          <Flex flexDirection={"column"} mt="5">
-            {poll.options.map((option) => (
-              <Button
-                margin={"2"}
-                padding={"8"}
-                colorScheme={option.id == id ? "blue" : "grey"}
-                onClick={() => vote(option.id)}
-              >
-                <Heading>{option.value}</Heading>
-              </Button>
-            ))}
-          </Flex>
-        </Box>
-      </Box>
-    );
-  }
 
   return (
     <Box alignItems={"center"}>
@@ -140,20 +141,19 @@ export default function Poll() {
         backgroundColor="#f2f2f2"
         borderRadius={"10"}
         mt="5"
-        width={"80%"}
-        padding="10"
+        padding={isLargerThan1000 ? "10" : "2"}
         alignItems={"center"}
         textAlign="center"
         alignSelf={"center"}
-        ml="150"
+        ml={isLargerThan1000 ? "100" : "2"}
         boxShadow="xs"
       >
         <Heading>{poll.title}</Heading>
         <Flex flexDirection={"column"} mt="5">
           {poll.options.map((option) => (
             <Button
-              margin={"2"}
-              padding={"8"}
+              margin={isLargerThan1000 ? "2" : "1"}
+              padding={isLargerThan1000 ? "8" : "5"}
               colorScheme="blue"
               onClick={() => vote(option.id)}
             >
