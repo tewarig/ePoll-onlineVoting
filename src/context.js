@@ -4,6 +4,7 @@ import getUserPolls from "../src/hooks/getUserPolls";
 const User = createContext();
 const Context = ({ children }) => {
   const { polls } = getUserPolls();
+  
   return <User.Provider value={polls}>{children}</User.Provider>;
 };
 

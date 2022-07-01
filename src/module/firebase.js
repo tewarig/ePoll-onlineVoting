@@ -16,7 +16,7 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
@@ -46,9 +46,10 @@ const signInWithGoogle = async () => {
         email: user.email,
       });
     }
+    toast.success("Login successful");
   } catch (err) {
     console.error(err);
-    notify(err.message);
+    toast.error(err);
   }
 };
 const logInWithEmailAndPassword = async (email, password) => {
@@ -57,7 +58,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     notify("login successful");
   } catch (err) {
     console.error(err);
-    notify(err.message);
+    toast.error(err);
   }
 };
 const registerWithEmailAndPassword = async (name, email, password) => {
@@ -81,7 +82,7 @@ const sendPasswordReset = async (email) => {
     notify("Password reset link sent!");
   } catch (err) {
     console.error(err);
-    notify(err.message);
+    toast.error(err);
   }
 };
 const logout = () => {

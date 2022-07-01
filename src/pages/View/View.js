@@ -66,7 +66,7 @@ const View = () => {
   if (!poll) {
     return <Heading>Loading....</Heading>;
   }
-  const link = `${process.env.REACT_APP_DOMAIN}/poll/${docId}`;
+  const link = `https://epoll.gauravtewari.xyz/poll/${docId}`;
   return (
     <Box alignItems={"center"}>
       <Box
