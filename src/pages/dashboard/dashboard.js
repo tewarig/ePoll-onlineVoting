@@ -42,8 +42,12 @@ function DashBoard() {
   const [isLargerThan1000] = useMediaQuery("(min-width: 1000px)");
 
   const addValue = (value, id) => {
-    setOptions([...options, { id: id, value: value, votes: 0 }]);
-    setAddValue(false);
+    if (value == "") {
+      toast.error("Option can't be empty");
+    } else {
+      setOptions([...options, { id: id, value: value, votes: 0 }]);
+      setAddValue(false);
+    }
   };
   const deleteOption = (id) => {
     setOptions(options.filter((option) => option.id !== id));
