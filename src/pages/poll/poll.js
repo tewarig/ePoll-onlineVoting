@@ -116,7 +116,7 @@ export default function Poll() {
   if (!user) {
     return (
       <Box alignContent={"center"} alignItems={"center"}>
-        <Box width={"25%"} ml="40%">
+        <Box width={"300px"} height="500px" ml={isLargerThan1000 ? "40%" :"15%"}>
           <HandleAuth></HandleAuth>;
         </Box>
       </Box>
