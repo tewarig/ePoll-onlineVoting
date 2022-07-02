@@ -78,7 +78,9 @@ export default function NavBar() {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            <h1> E Poll</h1>
+            <Flex alignItems={"center"}>
+              <h1> E Poll</h1> <Badge ml="2"> Beta</Badge>
+            </Flex>
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
