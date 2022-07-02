@@ -7,7 +7,7 @@ import {
   Button,
   Input,
   IconButton,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../module/firebase";
@@ -116,7 +116,11 @@ export default function Poll() {
   if (!user) {
     return (
       <Box alignContent={"center"} alignItems={"center"}>
-        <Box width={"300px"} height="500px" ml={isLargerThan1000 ? "40%" :"15%"}>
+        <Box
+          width={"300px"}
+          height="500px"
+          ml={isLargerThan1000 ? "40%" : "15%"}
+        >
           <HandleAuth></HandleAuth>;
         </Box>
       </Box>
@@ -155,12 +159,13 @@ export default function Poll() {
       <Box
         backgroundColor="#f2f2f2"
         borderRadius={"10"}
-        mt="5"
+        mt={isLargerThan1000 ? "5%" : "2%"}
         padding={isLargerThan1000 ? "10" : "2"}
         alignItems={"center"}
         textAlign="center"
         alignSelf={"center"}
-        ml={isLargerThan1000 ? "100" : "2"}
+        ml={isLargerThan1000 ? "5%" : "2"}
+        mr={isLargerThan1000 ? "5%" : "2"}
         boxShadow="xs"
       >
         <Heading>{poll.title}</Heading>
