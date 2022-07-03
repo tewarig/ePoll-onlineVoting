@@ -92,6 +92,9 @@ function DashBoard() {
         borderRadius={"25"}
         marginRight={isLargerThan1000 ? "30" : "5"}
         marginLeft={isLargerThan1000 ? "20" : "5"}
+        paddingTop={isLargerThan1000?  "50" : "50"}
+        marginBottom={isLargerThan1000?  "0" : "30"}
+
       >
         <Heading>Polls</Heading>
         <Button onClick={onOpen} backgroundColor="#333" color="#fff">
