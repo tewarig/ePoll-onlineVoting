@@ -12,9 +12,7 @@ function ProtectedRoute({ children }) {
     }
   }, [user, loading, error]);
 
-  if (loading) {
-    return <></>;
-  }
+ 
   if (user) return <div>{children}</div>;
 }
 

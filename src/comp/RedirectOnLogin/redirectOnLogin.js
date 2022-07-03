@@ -11,6 +11,12 @@ function RedirectOnlogin({ routeLink, children }) {
       navigate(routeLink);
     }
   }, [user, loading, error]);
+
+  if(loading){
+    return(<>loading...</>)
+  }
+
+
   return <>{children}</>;
 }
 
