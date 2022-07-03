@@ -34,6 +34,9 @@ function HandleAuth({ onClose }) {
       return false;
     }
   }
+  function loginInWithTest() {
+    logInWithEmailAndPassword("gauravtewari111@gmail.com", "12345678");
+  }
 
   const signUp = () => {
     const password1 = password.current.value;
@@ -92,6 +95,20 @@ function HandleAuth({ onClose }) {
           {" "}
           Login
         </Button>
+        <Flex ml="25" mt="200" textAlign={"center"}>
+          <Button
+            alignContent={"center"}
+            mt="1"
+            textAlign="center"
+            onClick={() => {
+              loginInWithTest();
+              onClose();
+            }}
+          >
+            {" "}
+            Login in with test account
+          </Button>
+        </Flex>
         <Flex ml="25" mt="200" textAlign={"center"}>
           Don't have an account ?
           <Badge

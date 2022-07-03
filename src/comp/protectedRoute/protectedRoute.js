@@ -11,6 +11,7 @@ function ProtectedRoute({ children }) {
       navigate("/");
     }
   }, [user, loading, error]);
+  
 
  
   if (user) return <div>{children}</div>;
